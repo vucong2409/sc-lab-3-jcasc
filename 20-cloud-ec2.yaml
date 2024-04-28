@@ -1,0 +1,16 @@
+jenkins:
+  clouds:
+    - amazonEC2:
+        name: "ec2"
+        instanceCapStr: 2
+        region: "ap-southeast-1"
+        credentialsId: "aws-for-jenkins-master"
+        sshKeysCredentialsId: "ssh-for-jenkins-worker"
+        templates:
+          - description: "Packer Agent for jenkins"
+            type: "T3Micro"
+            labelString: "packer"
+            ami: "${PACKER_WORKER_AMI}"
+            securityGroups: "${WORKER_SECURITY_GROUP_ID}"
+            deleteRootOnTermination: false
+            connectionStrategy: PRIVATE_IP
