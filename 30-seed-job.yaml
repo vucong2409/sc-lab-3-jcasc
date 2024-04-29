@@ -1,6 +1,6 @@
 jobs:
   - script: |
-      pipelineJob('job-dsl-plugin') {
+      pipelineJob('Packer CI') {
         definition {
           cpsScm {
             scm {
