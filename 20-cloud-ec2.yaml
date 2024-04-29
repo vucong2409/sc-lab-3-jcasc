@@ -14,7 +14,7 @@ jenkins:
             securityGroups: "${WORKER_SECURITY_GROUP_ID}"
             deleteRootOnTermination: false
             connectionStrategy: PRIVATE_IP
-            subnetIds: "${WORKER_SUBNET_ID}"
+            subnetId: "${WORKER_SUBNET_ID}"
             remoteFS: "/home/ec2-user"
             remoteAdmin: "ec2-user"
             amiType:
