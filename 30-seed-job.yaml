@@ -1,6 +1,11 @@
 jobs:
   - script: |
-      pipelineJob('Packer CI') {
+      folder('ci') {
+        displayName("CD")
+      }
+
+      pipelineJob('ci/packer') {
+        displayName("Packer CD")
         definition {
           cpsScm {
             scm {
