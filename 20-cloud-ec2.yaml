@@ -15,7 +15,7 @@ jenkins:
             deleteRootOnTermination: false
             connectionStrategy: PRIVATE_IP
             subnetId: "${WORKER_SUBNET_ID}"
-            iamInstanceProfile: "${WORKER_INSTANCE_PROFILE}"
+            iamInstanceProfile: "${PACKER_WORKER_INSTANCE_PROFILE}"
             remoteFS: "/home/ec2-user"
             remoteAdmin: "ec2-user"
             amiType:
@@ -26,3 +26,42 @@ jenkins:
               chmod 600 /var/swap.1
               mkswap /var/swap.1
               swapon /var/swap.1
+          - description: "Terraform Agent for jenkins"
+            type: "T3Micro"
+            labelString: "terraform"
+            ami: "${TERRAFORM_WORKER_AMI}"
+            securityGroups: "${WORKER_SECURITY_GROUP_ID}"
+            deleteRootOnTermination: false
+            connectionStrategy: PRIVATE_IP
+            subnetId: "${WORKER_SUBNET_ID}"
+            iamInstanceProfile: "${TERRAFORM_WORKER_INSTANCE_PROFILE}"
+            remoteFS: "/home/ec2-user"
+            remoteAdmin: "ec2-user"
+            amiType:
+              unixData:
+                rootCommandPrefix: "sudo"
+            userData: |
+              dd if=/dev/sda1 of=/var/swap.1 bs=1M count=2048
+              chmod 600 /var/swap.1
+              mkswap /var/swap.1
+              swapon /var/swap.1
+          - description: "Docker Agent for jenkins"
+            type: "T3Micro"
+            labelString: "terraform"
+            ami: "${DOCKER_WORKER_AMI}"
+            securityGroups: "${WORKER_SECURITY_GROUP_ID}"
+            deleteRootOnTermination: false
+            connectionStrategy: PRIVATE_IP
+            subnetId: "${WORKER_SUBNET_ID}"
+            iamInstanceProfile: "${DOCKER_WORKER_INSTANCE_PROFILE}"
+            remoteFS: "/home/ec2-user"
+            remoteAdmin: "ec2-user"
+            amiType:
+              unixData:
+                rootCommandPrefix: "sudo"
+            userData: |
+              dd if=/dev/sda1 of=/var/swap.1 bs=1M count=2048
+              chmod 600 /var/swap.1
+              mkswap /var/swap.1
+              swapon /var/swap.1
+              systemctl start docker
