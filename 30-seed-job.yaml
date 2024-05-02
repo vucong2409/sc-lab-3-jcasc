@@ -57,3 +57,21 @@ jobs:
           }
         }
       }
+
+      pipelineJob('cd/cat-fe') {
+        displayName("Cat-FE CD")
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url('https://github.com/vucong2409/cat-ui-fe')
+                  credentials('git-cred')
+                }
+                branch('*/main')
+              }
+            }
+            lightweight()
+          }
+        }
+      }
