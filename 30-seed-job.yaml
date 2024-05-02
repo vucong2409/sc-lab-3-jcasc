@@ -39,3 +39,21 @@ jobs:
           }
         }
       }
+
+      pipelineJob('cd/cat-be') {
+        displayName("Cat-BE CD")
+        definition {
+          cpsScm {
+            scm {
+              git {
+                remote {
+                  url('https://github.com/vucong2409/cat-be')
+                  credentials('git-cred')
+                }
+                branch('*/main')
+              }
+            }
+            lightweight()
+          }
+        }
+      }
