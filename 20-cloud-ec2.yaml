@@ -2,7 +2,7 @@ jenkins:
   clouds:
     - amazonEC2:
         name: "ec2"
-        instanceCapStr: 2
+        instanceCapStr: 1
         region: "ap-southeast-1"
         credentialsId: "aws-for-jenkins-master"
         sshKeysCredentialsId: "ssh-for-jenkins-worker"
@@ -47,7 +47,7 @@ jenkins:
               swapon /var/swap.1
           - description: "Docker Agent for jenkins"
             type: "T3Micro"
-            labelString: "terraform"
+            labelString: "docker"
             ami: "${DOCKER_WORKER_AMI}"
             securityGroups: "${WORKER_SECURITY_GROUP_ID}"
             deleteRootOnTermination: false
