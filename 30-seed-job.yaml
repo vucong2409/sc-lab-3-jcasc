@@ -22,20 +22,18 @@ jobs:
         }
       }
 
-      pipelineJob('cd/terraform') {
-        displayName("Terraform CD")
-        definition {
-          cpsScm {
-            scm {
-              git {
-                remote {
-                  url('https://github.com/vucong2409/sc-lab-3-iac')
-                  credentials('git-cred')
-                }
-                branch('*/main')
-              }
-            }
-            lightweight()
+      multibranchPipelineJob('cd/terraform') {
+        branchSources {
+          git {
+            id('terraformrepo')
+            remote('https://github.com/vucong2409/sc-lab-3-iac')
+            credentialsId('git-cred')
+            includes('*')
+          }
+        }
+        orphanedItemStrategy {
+          discardOldItems {
+            numToKeep(20)
           }
         }
       }
