@@ -29,9 +29,6 @@ jobs:
             remote('https://github.com/vucong2409/sc-lab-3-iac')
             credentialsId('git-cred')
             includes('*')
-            traits {
-              TagDiscoveryTrait()
-            }
           }
         }
         orphanedItemStrategy {
