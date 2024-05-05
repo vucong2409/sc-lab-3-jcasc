@@ -23,6 +23,7 @@ jobs:
       }
 
       multibranchPipelineJob('cd/terraform') {
+        displayName("Terraform")
         branchSources {
           git {
             id('terraformrepo')
@@ -43,38 +44,46 @@ jobs:
         }
       }
 
-      pipelineJob('cd/cat-be') {
+      multibranchPipelineJob('cd/cat-be') {
         displayName("Cat-BE CD")
-        definition {
-          cpsScm {
-            scm {
-              git {
-                remote {
-                  url('https://github.com/vucong2409/cat-be')
-                  credentials('git-cred')
-                }
-                branch('*/main')
-              }
-            }
-            lightweight()
+        branchSources {
+          git {
+            id('terraformrepo')
+            remote('https://github.com/vucong2409/cat-be')
+            credentialsId('git-cred')
+            includes('*')
+          }
+        }
+        configure {
+          def traits = it / sources / data / 'jenkins.branch.BranchSource' / source / traits
+          traits << 'jenkins.plugins.git.traits.TagDiscoveryTrait' {}
+          traits << 'jenkins.plugins.git.traits.BranchDiscoveryTrait' {}
+        }
+        orphanedItemStrategy {
+          discardOldItems {
+            numToKeep(20)
           }
         }
       }
 
-      pipelineJob('cd/cat-fe') {
+      multibranchPipelineJob('cd/cat-fe') {
         displayName("Cat-FE CD")
-        definition {
-          cpsScm {
-            scm {
-              git {
-                remote {
-                  url('https://github.com/vucong2409/cat-ui-fe')
-                  credentials('git-cred')
-                }
-                branch('*/main')
-              }
-            }
-            lightweight()
+        branchSources {
+          git {
+            id('terraformrepo')
+            remote('https://github.com/vucong2409/cat-ui-fe')
+            credentialsId('git-cred')
+            includes('*')
+          }
+        }
+        configure {
+          def traits = it / sources / data / 'jenkins.branch.BranchSource' / source / traits
+          traits << 'jenkins.plugins.git.traits.TagDiscoveryTrait' {}
+          traits << 'jenkins.plugins.git.traits.BranchDiscoveryTrait' {}
+        }
+        orphanedItemStrategy {
+          discardOldItems {
+            numToKeep(20)
           }
         }
       }
