@@ -48,7 +48,7 @@ jobs:
         displayName("Cat-BE CD")
         branchSources {
           git {
-            id('terraformrepo')
+            id('catberepo')
             remote('https://github.com/vucong2409/cat-be')
             credentialsId('git-cred')
             includes('*')
@@ -70,7 +70,7 @@ jobs:
         displayName("Cat-FE CD")
         branchSources {
           git {
-            id('terraformrepo')
+            id('catferepo')
             remote('https://github.com/vucong2409/cat-ui-fe')
             credentialsId('git-cred')
             includes('*')
