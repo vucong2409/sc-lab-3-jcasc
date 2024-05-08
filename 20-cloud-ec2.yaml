@@ -45,6 +45,7 @@ jenkins:
             subnetId: "${WORKER_SUBNET_ID}"
             iamInstanceProfile: "${DOCKER_WORKER_INSTANCE_PROFILE}"
             remoteFS: "/home/ec2-user"
+            maxTotalUses: 1
             remoteAdmin: "ec2-user"
             amiType:
               unixData:
